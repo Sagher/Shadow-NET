@@ -1,2 +1,7 @@
-import these libraries to the projects build path in your IDE.
+Import these libraries to the projects build path in your IDE.
 
+Visit jnetpcap.com on how to install Jnetpcap or put the jnetpcap.dll and jnetpcap-pcap100.dll files found in the dll folder in your Windows directory: "C:\Windows"
+ 
+ You will also need to configure the IDE classpath variable and add new class path variable to the directory where log4j.properties file resides.
+ 
+ Change the log4j.appender.R.File variable in log4j.properties file to change the directory to where the .log file is to be stored. 
