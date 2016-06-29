@@ -1,4 +1,4 @@
-Import  jar files in jars folder to the projects build path in your IDE.
+Import the libraries in jars folder to the projects build path in your IDE.
 
 Visit jnetpcap.com on how to install Jnetpcap or put the jnetpcap.dll and jnetpcap-pcap100.dll files found in the dll folder in your Windows directory: "C:\Windows"
  
