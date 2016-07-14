@@ -34,7 +34,7 @@ public class Main {
 		debugger.debug("Error while opening device for capture: " + errbuf.toString());
 			return;
 		}
-		pcap.loop(-1, new PacketInspector(), "jNetPcap rocks!");
+		pcap.loop(-1, new PacketInspector(), "");
 
 		pcap.close();
 
