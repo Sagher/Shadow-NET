@@ -3,6 +3,10 @@ package Feeds;
 import java.util.ArrayList;
 
 public class MainFeeds {
+	/**
+	 * Creating Static objects of ThreatFeedsFetcher.java  
+	 * and getting the categorized feeds in respective ArrayLists
+	  */
 	public static ArrayList<String> Malwares, DB, Probing, SIP, SSH, Web, Urls;
 
 	static ThreatFeedsFetcher malwares = new ThreatFeedsFetcher();
