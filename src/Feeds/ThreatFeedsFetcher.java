@@ -25,6 +25,10 @@ public class ThreatFeedsFetcher {
 			HttpClient client = new DefaultHttpClient();
 
 			HttpGet request = new HttpGet(url);
+			
+			String encoding = DatatypeConverter.printBase64Binary("user:ti@user_TI".getBytes("UTF-8"));
+	       
+			request.setHeader("Authorization", "Basic " + encoding);
 
 			HttpResponse Response = client.execute(request);
 
