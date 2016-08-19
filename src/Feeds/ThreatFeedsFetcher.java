@@ -26,7 +26,7 @@ public class ThreatFeedsFetcher {
 
 			HttpGet request = new HttpGet(url);
 			
-			String encoding = DatatypeConverter.printBase64Binary("user:ti@user_TI".getBytes("UTF-8"));
+			String encoding = DatatypeConverter.printBase64Binary("triam:wuf786@WUF".getBytes("UTF-8"));
 	       
 			request.setHeader("Authorization", "Basic " + encoding);
 
