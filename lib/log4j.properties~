@@ -10,7 +10,7 @@ log4j.appender.stdout.layout.ConversionPattern=%d	%m%n
 
 #File
 log4j.appender.R=org.apache.log4j.RollingFileAppender
-log4j.appender.R.File= /home/ShadowLogs.log
+log4j.appender.R.File= /home/sagher/Desktop/ShadowLogs.log
 log4j.appender.R.MaxBackupIndex=1
 
 log4j.appender.R.layout=org.apache.log4j.PatternLayout
@@ -22,7 +22,7 @@ log4j.additivity.PacketInspector= false
 
 #file 2
 log4j.appender.R1=org.apache.log4j.RollingFileAppender
-log4j.appender.R1.File= /home/Shadow-LOGS(exceptions).log
+log4j.appender.R1.File= /home/sagher/Desktop/Shadow-LOGS(exceptions).log
 log4j.appender.R1.MaxBackupIndex=1
 
 log4j.appender.R1.layout=org.apache.log4j.PatternLayout
@@ -34,7 +34,7 @@ log4j.additivity.debugLogger = false
 
 #File3
 log4j.appender.R2=org.apache.log4j.RollingFileAppender
-log4j.appender.R2.File= /home/Shadow-LOGS(Mongo-Logs).log
+log4j.appender.R2.File= /home/sagher/Desktop/Shadow-LOGS(Mongo-Logs).log
 log4j.appender.R2.MaxBackupIndex=1
 
 log4j.appender.R2.layout=org.apache.log4j.PatternLayout

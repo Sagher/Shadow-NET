@@ -8,26 +8,29 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.log4j.Logger;
+
 import java.util.ArrayList;
+import javax.xml.bind.DatatypeConverter;
 
 public class ThreatFeedsFetcher {
 
-	public  ArrayList<String> maliciousIPs = new ArrayList<String>();
+	Logger exceptionLogger = Logger.getLogger("debugLogger");
 
+	public ArrayList<String> maliciousIPs = new ArrayList<String>();
 
-	public  ArrayList<String> FeedsFetchers(String url,String type) {
+	public ArrayList<String> fetchFeeds(String url, String type) {
 
 		String IP_container;// space delimited ip list
 
 		try {
 
-			HttpClient client = new DefaultHttpClient();
-
+			HttpClient client = HttpClientBuilder.create().build();
 			HttpGet request = new HttpGet(url);
-			
+
 			String encoding = DatatypeConverter.printBase64Binary("triam:wuf786@WUF".getBytes("UTF-8"));
-	       
+
 			request.setHeader("Authorization", "Basic " + encoding);
 
 			HttpResponse Response = client.execute(request);
@@ -36,7 +39,7 @@ public class ThreatFeedsFetcher {
 
 			System.out.println("----------------------------------------");
 			System.out.println(Response.getStatusLine());
-			System.out.println(type+"\n----------------------------------------");
+			System.out.println(type + "\n----------------------------------------");
 
 			BufferedReader breader;
 
@@ -54,14 +57,14 @@ public class ThreatFeedsFetcher {
 
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				exceptionLogger.debug("IOException", e);
 
 			}
 
 		} catch (ClientProtocolException e) {
-			e.printStackTrace();
+			exceptionLogger.debug("ClientProtocolException", e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			exceptionLogger.debug("IOException", e);
 		}
 		return maliciousIPs;
 	}

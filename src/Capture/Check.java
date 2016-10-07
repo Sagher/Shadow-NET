@@ -3,13 +3,12 @@ package Capture;
 import Feeds.MainFeeds;
 
 public class Check {
-	public static  String isIPMalicious(String ip) {
+	public static String isIPMalicious(String ip) {
 
-		
-		if(!ip.equals("115.186.132.18")){
-			
+		if (!ip.equals("115.186.132.18")) {
+
 			if (MainFeeds.Malwares.contains(ip)) {
-				return "MALWARES";
+				return "MALWARE";
 			}
 			if (MainFeeds.DB.contains(ip)) {
 				return "DB";
@@ -25,15 +24,14 @@ public class Check {
 			}
 			if (MainFeeds.Probing.contains(ip)) {
 				return "PROBING";
+			} else {
+				return "none";
+
 			}
-		 else {
-			return "none";
-		
-		 }
-				
-	}
+
+		}
 		return "NONE";
-		
+
 	}
 
 	public static boolean isUrlMalicious(String url) {
@@ -43,6 +41,14 @@ public class Check {
 			return false;
 		}
 
+	}
+
+	public static boolean isMd5Matched(String md5) {
+		if (MainFeeds.MD5.contains(md5)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

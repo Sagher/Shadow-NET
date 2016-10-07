@@ -4,21 +4,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapIf;
 
 public class Main {
+	public static final Logger exceptionLogger = Logger.getLogger("debugLogger");
 
 	public static void main(String[] args) throws IOException {
-		List<PcapIf> alldevs = new ArrayList<PcapIf>(); // Will be filled with NICs
-		StringBuilder errbuf = new StringBuilder(); // For any error msgs
+		List<PcapIf> alldevs = new ArrayList<PcapIf>();
+		StringBuilder errbuf = new StringBuilder();
 
-		/***************************************************************************
-		 * First get a list of devices on this system
-		 **************************************************************************/
 		int r = Pcap.findAllDevs(alldevs, errbuf);
 		if (r != Pcap.OK || alldevs.isEmpty()) {
-			System.err.printf("Can't read list of devices, error is %s", errbuf.toString());
+			exceptionLogger.error("Can't read list of devices, error is " + errbuf.toString());
 			return;
 		}
 
@@ -26,14 +25,20 @@ public class Main {
 
 		int i = 0;
 		for (PcapIf device : alldevs) {
-
-			System.out.println((i++) + "\t" + device.getName());
+			exceptionLogger.info((i) + "\t" + device.getName());
+			System.out.println((i) + "\t" + device.getName());
+			i++;
 		}
 
-		Pcap pcap = Pcap.openLive(alldevs.get(0).getName(), 64*1024, Pcap.MODE_PROMISCUOUS, 10*1000, errbuf);
+		int snaplen = 64 * 1024;
+		int flags = Pcap.MODE_NON_PROMISCUOUS;
+		int timeout = 10 * 10000;
+		String device = "wlan0";
+		exceptionLogger.info("Device Selected: "+device);
+		Pcap pcap = Pcap.openLive(device, snaplen, flags, timeout, errbuf);
 
 		if (pcap == null) {
-			System.err.printf("Error while opening device for capture: " + errbuf.toString());
+			exceptionLogger.error("Error while opening device for capture: " + errbuf.toString());
 			return;
 		}
 		pcap.loop(-1, new PacketInspector(), " ");
