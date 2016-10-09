@@ -62,7 +62,7 @@ public class TcpReassemblyProcessor {
 						sourceIP + ":" + tcp.source() + " \t" + destinationIP + ":" + tcp.destination() + "\t" + "\t"
 								+ Check.isIPMalicious(sourceIP) + "\t" + segments + "\t" + hash + "\t" + hashStatus);
 
-				String direction = getDirection(tcp.source());
+				String direction = "INCOMING";
 
 				mongoLogger.logPayload(sourceIP, destinationIP, tcp.source(), tcp.destination(), direction,
 						Check.isIPMalicious(sourceIP), segments, hash, hashStatus);
@@ -88,12 +88,6 @@ public class TcpReassemblyProcessor {
 		return null;
 	}
 
-	public static String getDirection(int port) {
-		if (port == 8080 | port == 443 | port == 80) {
-			return "INCOMING";
-		} else {
-			return "OUTGOING";
-		}
-	}
+	
 
 }
