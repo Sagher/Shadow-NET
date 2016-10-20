@@ -1,7 +1,5 @@
 package Capture;
 
-import java.io.IOException;
-
 import org.apache.log4j.Logger;
 import org.jnetpcap.packet.JPacket;
 import org.jnetpcap.packet.JPacketHandler;
@@ -9,8 +7,7 @@ import org.jnetpcap.protocol.network.Ip4;
 import org.jnetpcap.protocol.tcpip.Http;
 import org.jnetpcap.protocol.tcpip.Http.Request;
 
-import com.maxmind.geoip.Location;
-import com.maxmind.geoip.LookupService;
+import GeoIP.GeoIPv4;
 
 import org.jnetpcap.protocol.tcpip.Tcp;
 
@@ -32,6 +29,7 @@ public class PacketInspector implements JPacketHandler<Object> {
 		String direction;
 		String maliciousType;
 		boolean urlType;
+		String location;
 
 		if (packet.hasHeader(ip4) && packet.hasHeader(tcp)) {
 			byte[] sIP = new byte[4];
@@ -46,28 +44,46 @@ public class PacketInspector implements JPacketHandler<Object> {
 
 			maliciousType = getMaliciousType(direction, sourceIP, destinationIP);
 
-			maliciousMatchLogger.info(sourceIP + ":" + tcp.source() + " \t" + destinationIP + ":" + tcp.destination()
-					+ "\t" + direction + "\t" + maliciousType);
+			/*
+			 * If ip matches to and the list then resolve its Location and log
+			 * to Db and also to the log file
+			 * 
+			 */
 
-			
 			if (maliciousType.length() != 4) {
+				if (direction.equals("INCOMING")) {
+					location = GeoIPv4.getLocation(sourceIP);
+				} else {
+					location = GeoIPv4.getLocation(destinationIP);
+				}
 
-				mongoLogger.logtoDb(sourceIP, destinationIP, tcp.source(), tcp.destination(), direction, maliciousType);
 				maliciousMatchLogger.info(sourceIP + ":" + tcp.source() + " \t" + destinationIP + ":"
-						+ tcp.destination() + "\t" + direction + "\t" + maliciousType);
+						+ tcp.destination() + "\t" + direction + "\t" + maliciousType + "\t" + location);
+
+				mongoLogger.logtoDb(sourceIP, destinationIP, tcp.source(), tcp.destination(), direction, maliciousType,
+						location);
 
 			}
+
+			/*
+			 * Resolve the destination of the outgoing url request and log to DB
+			 * and log file
+			 * 
+			 */
 
 			if (packet.hasHeader(http) && !http.isResponse()) {
 				url = "http://" + http.fieldValue(Request.Host) + http.fieldValue(Request.RequestUrl);
 
 				urlType = Check.isUrlMalicious(url);
 
-				maliciousMatchLogger.info(sourceIP + ":" + tcp.source() + " \t" + destinationIP + ":"
-						+ tcp.destination() + "\t" + direction + "\t" + maliciousType + "\t" + url + "\t" + urlType);
+				location = GeoIPv4.getLocation(destinationIP);
+
+				maliciousMatchLogger
+						.info(sourceIP + ":" + tcp.source() + " \t" + destinationIP + ":" + tcp.destination() + "\t"
+								+ direction + "\t" + maliciousType + "\t" + location + "\t" + url + "\t" + urlType);
 
 				mongoLogger.logUrltoDb(sourceIP, destinationIP, tcp.source(), tcp.destination(), direction,
-						maliciousType, url, urlType);
+						maliciousType, url, urlType, location);
 
 			}
 
@@ -77,6 +93,10 @@ public class PacketInspector implements JPacketHandler<Object> {
 
 	}
 
+	/*
+	 * Checking the ip address against all of the arraylist
+	 * 
+	 */
 	private String getMaliciousType(String direction, String sourceIP, String destinationIP) {
 		if (direction.equals("INCOMING")) {
 			return Check.isIPMalicious(sourceIP);
@@ -87,6 +107,10 @@ public class PacketInspector implements JPacketHandler<Object> {
 		}
 	}
 
+	/*
+	 * Determining the Direction of tcp packets
+	 * 
+	 */
 	private String getDirection(int port) {
 		if (port == 8080 | port == 443 | port == 80) {
 			return "INCOMING";
@@ -94,16 +118,5 @@ public class PacketInspector implements JPacketHandler<Object> {
 			return "OUTGOING";
 		}
 	}
-
-	@SuppressWarnings("unused")
-	private String getLocation(String ip) throws IOException {
-		LookupService cl = new LookupService("/home/sagher/Desktop/GeoLiteCity.dat", LookupService.GEOIP_INDEX_CACHE);
-
-		Location location = cl.getLocation(ip);
-
-		return location.countryName;
-	}
-
-	
 
 }

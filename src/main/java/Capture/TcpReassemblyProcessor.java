@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.apache.log4j.Logger;
 import org.jnetpcap.protocol.tcpip.Tcp;
 
+import GeoIP.GeoIPv4;
 import Mongo.MongoTester;
 
 public class TcpReassemblyProcessor {
@@ -41,7 +42,7 @@ public class TcpReassemblyProcessor {
 			if (!(hm.isEmpty())) {
 
 				int segments = hm.get(key).size();
-				System.out.println("No of segments: " + segments);
+				maliciousMatchLogger.info("No of segments: " + segments);
 
 				StringBuilder payload = new StringBuilder();
 
@@ -58,14 +59,16 @@ public class TcpReassemblyProcessor {
 
 				Boolean hashStatus = Check.isMd5Matched(hash);
 
-				maliciousMatchLogger.info(
-						sourceIP + ":" + tcp.source() + " \t" + destinationIP + ":" + tcp.destination() + "\t" + "\t"
-								+ Check.isIPMalicious(sourceIP) + "\t" + segments + "\t" + hash + "\t" + hashStatus);
+				String location = GeoIPv4.getLocation(sourceIP);
 
 				String direction = "INCOMING";
 
+				maliciousMatchLogger.info(sourceIP + ":" + tcp.source() + " \t" + destinationIP + ":"
+						+ tcp.destination() + "\t" + "\t" + Check.isIPMalicious(sourceIP) + "\t" + segments + "\t"
+						+ hash + "\t" + hashStatus + "\t" + location);
+
 				mongoLogger.logPayload(sourceIP, destinationIP, tcp.source(), tcp.destination(), direction,
-						Check.isIPMalicious(sourceIP), segments, hash, hashStatus);
+						Check.isIPMalicious(sourceIP), segments, hash, hashStatus, location);
 
 				hm.remove(key);
 
@@ -87,7 +90,5 @@ public class TcpReassemblyProcessor {
 		}
 		return null;
 	}
-
-	
 
 }
