@@ -14,5 +14,14 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="/home/sagher/Shadow-NET/lib/javax.xml.bind.jar"/>
 	<classpathentry kind="lib" path="/home/sagher/Shadow-NET/lib/jnetpcap.jar"/>
+	<classpathentry kind="lib" path="/root/.m2/repository/org/json/json/20140107/json-20140107.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="maven.groupId" value="org.json"/>
+			<attribute name="maven.artifactId" value="json"/>
+			<attribute name="maven.version" value="20140107"/>
+			<attribute name="maven.scope" value="test"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

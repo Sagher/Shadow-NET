@@ -64,7 +64,8 @@ public class PacketInspector implements JPacketHandler<Object> {
 						location);
 
 			}
-
+			
+			
 			/*
 			 * Resolve the destination of the outgoing url request and log to DB
 			 * and log file

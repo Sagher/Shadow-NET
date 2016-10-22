@@ -7,7 +7,7 @@ public class Check {
 
 		if (!ip.equals("115.186.132.18")) {
 
-			if (MainFeeds.Malwares.contains(ip)) {
+			if (MainFeeds.MALWARES.contains(ip)) {
 				return "MALWARE";
 			}
 			if (MainFeeds.DB.contains(ip)) {
@@ -19,12 +19,12 @@ public class Check {
 			if (MainFeeds.SSH.contains(ip)) {
 				return "SSH";
 			}
-			if (MainFeeds.Web.contains(ip)) {
+			if (MainFeeds.WEB.contains(ip)) {
 				return "WEB";
-			}
-			if (MainFeeds.Probing.contains(ip)) {
+			}if(MainFeeds.PROBING.contains(ip)){
 				return "PROBING";
-			} else {
+			}
+			 else {
 				return "none";
 
 			}
@@ -35,7 +35,7 @@ public class Check {
 	}
 
 	public static boolean isUrlMalicious(String url) {
-		if (MainFeeds.Urls.contains(url)) {
+		if (MainFeeds.URLS.contains(url)) {
 			return true;
 		} else {
 			return false;

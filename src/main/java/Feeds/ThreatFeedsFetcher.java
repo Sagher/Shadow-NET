@@ -11,16 +11,15 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
 import javax.xml.bind.DatatypeConverter;
 
 public class ThreatFeedsFetcher {
 
 	Logger exceptionLogger = Logger.getLogger("debugLogger");
 
-	public ArrayList<String> maliciousIPs = new ArrayList<String>();
+	public String maliciousIPs = new String();
 
-	public ArrayList<String> fetchFeeds(String url, String type) {
+	public String fetchFeeds(String url, String type) {
 
 		String IP_container;// space delimited ip list
 
@@ -29,7 +28,7 @@ public class ThreatFeedsFetcher {
 			HttpClient client = HttpClientBuilder.create().build();
 			HttpGet request = new HttpGet(url);
 
-			String encoding = DatatypeConverter.printBase64Binary("triam:wuf786@WUF".getBytes("UTF-8"));
+			String encoding = DatatypeConverter.printBase64Binary("triam:wud1991@WUD".getBytes("UTF-8"));
 
 			request.setHeader("Authorization", "Basic " + encoding);
 
@@ -49,7 +48,7 @@ public class ThreatFeedsFetcher {
 				if (entity != null) {
 					while ((IP_container = breader.readLine()) != null) {
 
-						maliciousIPs.add(IP_container);
+						maliciousIPs=(IP_container);
 
 					}
 
