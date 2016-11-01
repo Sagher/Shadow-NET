@@ -30,6 +30,7 @@ public class PacketInspector implements JPacketHandler<Object> {
 		String maliciousType;
 		boolean urlType;
 		String location;
+		String countryCode;
 
 		if (packet.hasHeader(ip4) && packet.hasHeader(tcp)) {
 			byte[] sIP = new byte[4];
@@ -53,19 +54,24 @@ public class PacketInspector implements JPacketHandler<Object> {
 			if (maliciousType.length() != 4) {
 				if (direction.equals("INCOMING")) {
 					location = GeoIPv4.getLocation(sourceIP);
+					countryCode = GeoIPv4.getCountryCode(sourceIP);
 				} else {
 					location = GeoIPv4.getLocation(destinationIP);
+					countryCode = GeoIPv4.getCountryCode(sourceIP);
+
 				}
 
 				maliciousMatchLogger.info(sourceIP + ":" + tcp.source() + " \t" + destinationIP + ":"
 						+ tcp.destination() + "\t" + direction + "\t" + maliciousType + "\t" + location);
 
 				mongoLogger.logtoDb(sourceIP, destinationIP, tcp.source(), tcp.destination(), direction, maliciousType,
-						location);
+						location, countryCode);
 
 			}
-			
-			
+
+			maliciousMatchLogger.info(sourceIP + ":" + tcp.source() + " \t" + destinationIP + ":" + tcp.destination()
+					+ "\t" + direction + "\t" + maliciousType);
+
 			/*
 			 * Resolve the destination of the outgoing url request and log to DB
 			 * and log file
@@ -79,12 +85,20 @@ public class PacketInspector implements JPacketHandler<Object> {
 
 				location = GeoIPv4.getLocation(destinationIP);
 
+				countryCode = GeoIPv4.getCountryCode(destinationIP);
+
 				maliciousMatchLogger
 						.info(sourceIP + ":" + tcp.source() + " \t" + destinationIP + ":" + tcp.destination() + "\t"
 								+ direction + "\t" + maliciousType + "\t" + location + "\t" + url + "\t" + urlType);
 
-				mongoLogger.logUrltoDb(sourceIP, destinationIP, tcp.source(), tcp.destination(), direction,
-						maliciousType, url, urlType, location);
+				/*
+				 * Log to DB only if the ip is malicious or if the url is listed
+				 * 
+				 */
+				if (urlType == true || maliciousType.length() != 4) {
+					mongoLogger.logUrltoDb(sourceIP, destinationIP, tcp.source(), tcp.destination(), direction,
+							maliciousType, url, urlType, location, countryCode);
+				}
 
 			}
 

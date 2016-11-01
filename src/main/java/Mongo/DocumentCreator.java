@@ -14,14 +14,16 @@ public class DocumentCreator {
 
 	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy, HH:mm:ss.SS");
 
-	public void createDoc(String src, String dest, int tcpsrc, int tcpdest, String dir, String type, String location)
+	public void createDoc(String src, String dest, int tcpsrc, int tcpdest, String dir, String type, String location,
+			String countryCode)
 
 	{
 
 		try {
 			my_doc = new Document("time", dateFormat.format(new Date())).append("sourceIP", src)
 					.append("destinationIP", dest).append("sourcePort", tcpsrc).append("destPort", tcpdest)
-					.append("direction", dir).append("maliciousType", type).append("location", location);
+					.append("direction", dir).append("maliciousType", type).append("location", location)
+					.append("countryCode", countryCode);
 
 		} catch (Exception e) {
 			mongoLogger.debug("DOCUMENT CREATION FAILED");
@@ -30,13 +32,13 @@ public class DocumentCreator {
 	}
 
 	public void createUrlDoc(String sourceIP, String destinationIP, int source, int destination, String dir,
-			String ipMalicious, String url, boolean urlMalicious, String location) {
+			String ipMalicious, String url, boolean urlMalicious, String location, String countryCode) {
 
 		try {
 			my_doc = new Document("time", dateFormat.format(new Date())).append("sourceIP", sourceIP)
 					.append("destinationIP", destinationIP).append("sourcePort", source).append("destPort", destination)
 					.append("direction", dir).append("maliciousType", ipMalicious).append("requestUrl", url)
-					.append("urlCheck", urlMalicious).append("location", location);
+					.append("urlCheck", urlMalicious).append("location", location).append("countryCode", countryCode);
 
 		} catch (Exception e) {
 			mongoLogger.debug("DOCUMENT CREATION FAILED");
@@ -45,8 +47,8 @@ public class DocumentCreator {
 
 	}
 
-	public void createPayloadDoc(String sourceIP, String destinationIP, int source, int destination,String dir, String ipMalicious,
-			int segments, String md5, Boolean hashStatus, String location) {
+	public void createPayloadDoc(String sourceIP, String destinationIP, int source, int destination, String dir,
+			String ipMalicious, int segments, String md5, Boolean hashStatus, String location) {
 
 		try {
 			my_doc = new Document("time", dateFormat.format(new Date())).append("sourceIP", sourceIP)

@@ -48,7 +48,7 @@ public class ThreatFeedsFetcher {
 				if (entity != null) {
 					while ((IP_container = breader.readLine()) != null) {
 
-						maliciousIPs=(IP_container);
+						maliciousIPs = (IP_container);
 
 					}
 

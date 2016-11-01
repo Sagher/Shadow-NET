@@ -1,13 +1,13 @@
 package Feeds;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class MainFeeds {
 
-	public static ArrayList<String> PROBING, MALWARES, WEB, DB, SIP, SSH, URLS, MD5;
+	public static HashSet<?> PROBING, MALWARES, WEB, DB, SIP, SSH, URLS, MD5;
 
 	public static String Malware, Db, Probing, Sip, Ssh, Web, Urls, Md5;
 
@@ -38,28 +38,28 @@ public class MainFeeds {
 
 			Md5 = md5.fetchFeeds("http://115.186.132.18:8080/TI-Test/attacks/malware/hashes", "MD5 HASH FEEDS");
 
-			PROBING = convertAndAddToList(Probing, "ip");
+			PROBING = convertAndAddToSet(Probing, "ip");
 			System.out.println("PROBES:" + PROBING.size());
 
-			MALWARES = convertAndAddToList(Malware, "ip");
+			MALWARES = convertAndAddToSet(Malware, "ip");
 			System.out.println("MALWARES:" + MALWARES.size());
 
-			WEB = convertAndAddToList(Web, "ip");
+			WEB = convertAndAddToSet(Web, "ip");
 			System.out.println("WEB:" + WEB.size());
 
-			DB = convertAndAddToList(Db, "ip");
+			DB = convertAndAddToSet(Db, "ip");
 			System.out.println("DB:" + DB.size());
 
-			SSH = convertAndAddToList(Ssh, "ip");
+			SSH = convertAndAddToSet(Ssh, "ip");
 			System.out.println("SSH:" + SSH.size());
 
-			SIP = convertAndAddToList(Sip, "ip");
+			SIP = convertAndAddToSet(Sip, "ip");
 			System.out.println("SIP:" + SIP.size());
 
-			URLS = convertAndAddToList(Urls, "url");
+			URLS = convertAndAddToSet(Urls, "url");
 			System.out.println("URLS:" + URLS.size());
 
-			MD5 = convertAndAddToList(Md5, "hash");
+			MD5 = convertAndAddToSet(Md5, "hash");
 			System.out.println("MD5:" + MD5.size());
 
 		} catch (Exception e) {
@@ -68,9 +68,9 @@ public class MainFeeds {
 
 	}
 
-	private static ArrayList<String> convertAndAddToList(String str, String key) {
+	private static HashSet<String> convertAndAddToSet(String str, String key) {
 		JSONArray jsonArr = new JSONArray(str);
-		ArrayList<String> list = new ArrayList<String>();
+		HashSet<String> list = new HashSet<String>();
 
 		for (int i = 0; i < jsonArr.length(); i++) {
 			JSONObject jsonObj = jsonArr.getJSONObject(i);
