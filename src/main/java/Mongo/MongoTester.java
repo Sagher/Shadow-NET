@@ -13,11 +13,11 @@ public class MongoTester {
 		handler.setCollection("MaliciousPackets");
 	}
 
-	public void logtoDb(String src, String dest, int i, int j, String direc, String type, String location) {
+	public void logtoDb(String src, String dest, int i, int j, String direc, String type, String location, String countryCode) {
 
 		DocumentCreator doc = new DocumentCreator();
 
-		doc.createDoc(src, dest, i, j, direc, type, location);
+		doc.createDoc(src, dest, i, j, direc, type, location,countryCode);
 
 		Document createdDoc = doc.getDocument();
 
@@ -25,10 +25,10 @@ public class MongoTester {
 	}
 
 	public void logUrltoDb(String sourceIP, String destinationIP, int source, int destination, String dir,
-			String ipMalicious, String url, boolean urlMalicious, String location) {
+			String ipMalicious, String url, boolean urlMalicious, String location, String countryCode) {
 		DocumentCreator doc = new DocumentCreator();
 
-		doc.createUrlDoc(sourceIP, destinationIP, source, destination, dir, ipMalicious, url, urlMalicious, location);
+		doc.createUrlDoc(sourceIP, destinationIP, source, destination, dir, ipMalicious, url, urlMalicious, location,countryCode);
 
 		Document createdDoc = doc.getDocument();
 

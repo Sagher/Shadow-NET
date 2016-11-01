@@ -11,7 +11,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.log4j.Logger;
 
-import javax.xml.bind.DatatypeConverter;
 
 public class ThreatFeedsFetcher {
 
@@ -28,9 +27,7 @@ public class ThreatFeedsFetcher {
 			HttpClient client = HttpClientBuilder.create().build();
 			HttpGet request = new HttpGet(url);
 
-			String encoding = DatatypeConverter.printBase64Binary("triam:wud1991@WUD".getBytes("UTF-8"));
-
-			request.setHeader("Authorization", "Basic " + encoding);
+			
 
 			HttpResponse Response = client.execute(request);
 

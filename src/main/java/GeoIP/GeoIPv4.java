@@ -4,6 +4,7 @@ import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;
 
 import java.io.IOException;
+import java.util.Locale;
 
 public class GeoIPv4 {
 
@@ -26,6 +27,22 @@ public class GeoIPv4 {
 		if (lookUp.getLocation(ipAddress) != null) {
 			resolved = lookUp.getLocation(ipAddress);
 			return resolved.countryName;
+		} else {
+			resolved = null;
+		}
+		return "N/A";
+	}
+	
+	public static String getCountryCode(String ipAddress) {
+		if (lookUp.getLocation(ipAddress) != null) {
+			resolved = lookUp.getLocation(ipAddress);
+			Locale alpha3Country = new Locale("en", resolved.countryCode);
+			if (resolved.countryCode.equals("EU")) {
+				return resolved.countryCode;
+			} else {
+				String loc = alpha3Country.getISO3Country();
+				return loc;
+			}
 		} else {
 			resolved = null;
 		}
