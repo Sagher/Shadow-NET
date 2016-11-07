@@ -63,15 +63,18 @@ public class TcpReassemblyProcessor {
 
 				String direction = "INCOMING";
 
-				maliciousMatchLogger.info(sourceIP + ":" + tcp.source() + " \t" + destinationIP + ":"
-						+ tcp.destination() + "\t" + "\t" + Check.isIPMalicious(sourceIP) + "\t" + segments + "\t"
-						+ hash + "\t" + hashStatus + "\t" + location);
+				String maliciousType = Check.isIPMalicious(sourceIP);
 
-				mongoLogger.logPayload(sourceIP, destinationIP, tcp.source(), tcp.destination(), direction,
-						Check.isIPMalicious(sourceIP), segments, hash, hashStatus, location);
+				maliciousMatchLogger.info(
+						sourceIP + ":" + tcp.source() + " \t" + destinationIP + ":" + tcp.destination() + "\t" + "\t"
+								+ maliciousType + "\t" + segments + "\t" + hash + "\t" + hashStatus + "\t" + location);
 
-				hm.remove(key);
+				if (hashStatus == true || maliciousType != ("none")) {
+					mongoLogger.logPayload(sourceIP, destinationIP, tcp.source(), tcp.destination(), direction,
+							maliciousType, segments, hash, hashStatus, location);
 
+					hm.remove(key);
+				}
 			}
 		}
 
