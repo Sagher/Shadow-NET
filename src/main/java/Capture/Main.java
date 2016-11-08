@@ -33,7 +33,7 @@ public class Main {
 		int snaplen = 64 * 1024;
 		int flags = Pcap.MODE_NON_PROMISCUOUS;
 		int timeout = 10 * 1;
-		String device = "eth0";
+		String device = "wlan0";
 		exceptionLogger.info("Device Selected: "+device);
 		Pcap pcap = Pcap.openLive(device, snaplen, flags, timeout, errbuf);
 
