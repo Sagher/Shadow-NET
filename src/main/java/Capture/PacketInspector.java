@@ -95,7 +95,7 @@ public class PacketInspector implements JPacketHandler<Object> {
 				 * Log to DB only if the ip is malicious or if the url is listed
 				 * 
 				 */
-				if (urlType == true || maliciousType.length() != 4) {
+				if (urlType == true) {
 					mongoLogger.logUrltoDb(sourceIP, destinationIP, tcp.source(), tcp.destination(), direction,
 							maliciousType, url, urlType, location, countryCode);
 				}

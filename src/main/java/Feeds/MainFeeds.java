@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 public class MainFeeds {
 
-	public static HashSet<?> PROBING, MALWARES, WEB, DB, SIP, SSH, URLS, MD5;
+	public static HashSet<String> PROBING, MALWARES, WEB, DB, SIP, SSH, URLS, MD5;
 
 	public static String Malware, Db, Probing, Sip, Ssh, Web, Urls, Md5;
 
@@ -42,6 +42,7 @@ public class MainFeeds {
 			System.out.println("PROBES:" + PROBING.size());
 
 			MALWARES = convertAndAddToSet(Malware, "ip");
+			
 			System.out.println("MALWARES:" + MALWARES.size());
 
 			WEB = convertAndAddToSet(Web, "ip");
