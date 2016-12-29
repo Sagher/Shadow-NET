@@ -22,27 +22,26 @@ public class MainFeeds {
 
 	static {
 		try {
-			Malware = malwares.fetchFeeds("http://115.186.132.18:8080/TI-Test/attacks/malware/ips", "MALWARE FEEDS");
+			Malware = malwares.fetchFeeds("http://115.186.132.18:8080/TI2/attacks/malware/ips", "MALWARE FEEDS");
 
-			Db = db.fetchFeeds("http://115.186.132.18:8080/TI-Test/attacks/db/ips", "DB FEEDS");
+			Db = db.fetchFeeds("http://115.186.132.18:8080/TI2/attacks/db/ips", "DB FEEDS");
 
-			Probing = probing.fetchFeeds("http://115.186.132.18:8080/TI-Test/attacks/probing/ips", "PROBING FEEDS");
+			Probing = probing.fetchFeeds("http://115.186.132.18:8080/TI2/attacks/probing/ips", "PROBING FEEDS");
 
-			Sip = sip.fetchFeeds("http://115.186.132.18:8080/TI-Test/attacks/sip/ips", "SIP FEEDS");
+			Sip = sip.fetchFeeds("http://115.186.132.18:8080/TI2/attacks/sip/ips", "SIP FEEDS");
 
-			Ssh = ssh.fetchFeeds("http://115.186.132.18:8080/TI-Test/attacks/ssh/ips", "SSH FEEDS");
+			Ssh = ssh.fetchFeeds("http://115.186.132.18:8080/TI2/attacks/ssh/ips", "SSH FEEDS");
 
-			Web = web.fetchFeeds("http://115.186.132.18:8080/TI-Test/attacks/web/ips", "WEB FEEDS");
+			Web = web.fetchFeeds("http://115.186.132.18:8080/TI2/attacks/web/ips", "WEB FEEDS");
 
-			Urls = urls.fetchFeeds("http://115.186.132.18:8080/TI-Test/attacks/urls", "URLS FEEDS");
+			Urls = urls.fetchFeeds("http://115.186.132.18:8080/TI2/attacks/urls", "URLS FEEDS");
 
-			Md5 = md5.fetchFeeds("http://115.186.132.18:8080/TI-Test/attacks/malware/hashes", "MD5 HASH FEEDS");
+			Md5 = md5.fetchFeeds("http://115.186.132.18:8080/TI2/attacks/malware/hashes", "MD5 HASH FEEDS");
 
 			PROBING = convertAndAddToSet(Probing, "ip");
 			System.out.println("PROBES:" + PROBING.size());
 
 			MALWARES = convertAndAddToSet(Malware, "ip");
-			
 			System.out.println("MALWARES:" + MALWARES.size());
 
 			WEB = convertAndAddToSet(Web, "ip");

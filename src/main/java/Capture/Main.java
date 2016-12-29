@@ -3,6 +3,7 @@ package Capture;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 import org.jnetpcap.Pcap;
@@ -33,8 +34,14 @@ public class Main {
 		int snaplen = 64 * 1024;
 		int flags = Pcap.MODE_NON_PROMISCUOUS;
 		int timeout = 10 * 1;
-		String device = "wlan0";
-		exceptionLogger.info("Device Selected: "+device);
+
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("Enter device name: ");
+		String device = scanner.nextLine();
+		scanner.close();
+		System.out.println("Capturing: " + device);
+		
+		exceptionLogger.info("Device Selected: " + device);
 		Pcap pcap = Pcap.openLive(device, snaplen, flags, timeout, errbuf);
 
 		if (pcap == null) {
