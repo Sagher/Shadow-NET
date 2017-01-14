@@ -1,6 +1,8 @@
-Cross Platform Intrusion Detection and Prevention System built in Java. The system is aimed to be a light-weight background java application and is intended to be deployed on server and provide continuous monitoring of the network traffic. We are building this project for our Undergraduate Final year project. 
+Cross Platform Monitoring and Blocking System built in Java. The system is a light-weight background java application and is intended to be deployed on server and provide continuous monitoring of the network traffic. We are built this project for our Undergraduate Final year project. 
 
 The core functionality of the system is to extract required information from the packets and check those credentials with provided Threat Intelligence feeds of [TRIAM](http://www.triam.com.pk) and log them into the database and provide visualization accordingly on the web interface. The feeds are updated on daily basis and contain around about 90k malicious IP sources, 10k+ URLs and the same amount of Md5 hashes of malicious files and pages. They provide categorized data according to the types of attacks i.e, Probing, Malware, Web,SIP,Ssh, Db, Md5, Url etc.
+
+The System is also capable of blocking an ip address on linux server, this can be done from the web interface [shadownet-spring-boot](https://github.com/Sagher/shadownet-spring-boot)
 
 ***
 #### Technologies Used:
