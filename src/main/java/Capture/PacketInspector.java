@@ -109,7 +109,7 @@ public class PacketInspector implements JPacketHandler<Object> {
 	}
 
 	/*
-	 * Checking the ip address against all of the arraylist
+	 * Checking the ip address against all of the Hashsets
 	 * 
 	 */
 	private String getMaliciousType(String direction, String sourceIP, String destinationIP) {
