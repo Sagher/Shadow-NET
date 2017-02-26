@@ -1,20 +1,21 @@
-Cross Platform Monitoring and Blocking System built in Java. The system is a light-weight background java application and is intended to be deployed on server and provide continuous monitoring of the network traffic. We are built this project for our Undergraduate Final year project. 
+### Cross Platform Monitoring and Blocking System built in Java. 
+Shadow-NET is a light-weight background java application and is intended to be deployed on server and provide continuous monitoring of the network traffic. We built this project for our Undergraduate Final year project. 
 
-The core functionality of the system is to extract required information from the packets and check those credentials with provided Threat Intelligence feeds of [TRIAM](http://www.triam.com.pk) and log them into the database and provide visualization accordingly on the web interface. The feeds are updated on daily basis and contain around about 90k malicious IP sources, 10k+ URLs and the same amount of Md5 hashes of malicious files and pages. They provide categorized data according to the types of attacks i.e, Probing, Malware, Web,SIP,Ssh, Db, Md5, Url etc.
+The core functionality of the system is to extract required information from the packets and check those credentials with provided Threat Intelligence feeds of [TRIAM](http://www.triam.com.pk) and log them into the database and provide visualization accordingly on the web interface. The feeds are updated on daily basis and contain around 90k malicious IP sources, 10k+ URLs and the same amount of Md5 hashes of malicious files and pages. They provide categorized data according to the types of attacks i.e, Probing, Malware, Web,SIP,Ssh, Db, Md5, Url etc.
 
 The System is also capable of blocking an ip address on linux server, this can be done from the web interface [shadownet-spring-boot](https://github.com/Sagher/shadownet-spring-boot)
 
 ***
 #### Technologies Used:
   - [Jnetpcap](http://jnetpcap.com/) library to sniff the packets. 
-  - [Mongodb](https://www.mongodb.com/download-center?jmp=nav#community) for storing packets for visualization and analysis purposes. 
+  - [MongoDB](https://www.mongodb.com/download-center?jmp=nav#community) for storing packets for visualization and analysis purposes. 
   - [Log4j](http://logging.apache.org/log4j/2.x/) for logging all the activities of the application.
 
 
 
 #### To execute on linux environment you would need:
 - Latest [Jnetpcap](http://jnetpcap.com/). 
-- [Mongodb](https://www.mongodb.com/download-center?jmp=nav#community) server installed
+- [MongoDB](https://www.mongodb.com/download-center?jmp=nav#community) server installed
 - You would have to place the libjnetpcap.so file in usr/lib directory. 
 - Once the project is imported as an Existing 'Maven Project' in an IDE, add External .jar files found in the Shadow-NET/lib directory. 
 - The rest of the dependencies are downloaded from Maven repositories which are mentioned in /pom.xml.
@@ -59,7 +60,7 @@ ___
 
 ---
 ---
-### We have also created and a Web based DashBoard using:
+### We have also created a Web based DashBoard using:
 - Spring MVC
 - Thymeleaf
 - Jquery
